@@ -42,7 +42,7 @@ export default function SignIn() {
 
     let dataAfterLogin = '';
 
-    fetch("/login", requestOptions)
+    fetch(`${process.env.REACT_APP_BACKEND_URI}/login`, requestOptions)
       .then(response => response.text())
       .then(result => {
         let jsonResult = JSON.parse(result);

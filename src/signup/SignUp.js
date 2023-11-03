@@ -18,10 +18,34 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const username = data.get('username');
+    const password = data.get('password');
+    const confirmPassword = data.get('confirm-password');
+    if (password !== confirmPassword) {
+      alert('Password and confirm password do not match');
+    } else {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      const jsonBody = JSON.stringify({ username, password });
+      
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: jsonBody,
+        redirect: 'follow'
+      };
+      
+      fetch(`${process.env.REACT_APP_BACKEND_URI}/users/`, requestOptions)
+        .then(response => {
+          if (response.status === 201) {
+            alert('Sign up successfully');
+            navigate('/login');
+          } else {
+            console.log(response);
+            alert(response.detail);
+          }
+        }).catch(error => console.log('error', error));
+    }
   };
 
   const handleSignIn = (event) => {
