@@ -41,7 +41,7 @@ export default class Home extends Component {
       redirect: 'follow'
     };
 
-    fetch("/users/me", requestOptions)
+    fetch(`${process.env.REACT_APP_BACKEND_URI}/users/me`, requestOptions)
       .then(response => response.text())
       .then(result => {
         try {
